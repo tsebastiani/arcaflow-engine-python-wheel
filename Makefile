@@ -1,40 +1,53 @@
-# Makefile for pkg_name python wheel
+SOURCE_PATH=${CURDIR}/source/arcaflow-engine
+BIN_PATH=${CURDIR}/arcaflowengine/bin
 
-# PKG_NAME and VERSION should match what is in setup.py
-PKG_NAME=arcaflowengine
-VERSION=0.1.0
+build_darwin_arm64 : GOOS = darwin
+build_darwin_arm64 : GOARCH = arm64
+build_darwin_arm64 : PLAT_NAME = macosx_11_0_arm64
 
-# Shouldn't need to change anything below here
+build_linux_arm64 : GOOS = linux
+build_linux_arm64 : GOARCH = arm64
+build_linux_arm64 : PLAT_NAME = manylinux2014_aarch64
 
-# determine the target wheel file
-WHEEL_TARGET=dist/${PKG_NAME}-${VERSION}-py2.py3-none-any.whl
+build_darwin_amd64 : GOOS = darwin
+build_darwin_amd64 : GOARCH = amd64
+build_darwin_amd64 : PLAT_NAME = macosx_10_9_x86_64
+
+build_linux_amd64 : GOOS = linux
+build_linux_amd64 : GOARCH = amd64
+build_linux_amd64 : PLAT_NAME = manylinux2014_x86_64
+
 
 # help
 help:
-	@echo "Usage: make <setup|build|install|uninstall|clean>"
+	@echo "Usage: make setup && make <build_linux_amd64|build_linux_arm64|build_darwin_amd64|build_darwin_arm64>"
 
 # install packaging utilities (only run this once)
 setup: 
 	pip3.9 install wheel setuptools
 
-# build the wheel
-build: ${WHEEL_TARGET}
+checkout:
+	rm -rf ${SOURCE_PATH}
+	git clone https://github.com/arcalot/arcaflow-engine.git ${SOURCE_PATH}
 
-# install to local python environment
-install: ${WHEEL_TARGET}
-	pip3.9 install ${WHEEL_TARGET}
 
-# uninstall from local python environment
-uninstall:
-	pip3.9 uninstall ${PKG_NAME}
+build_linux_amd64:  checkout build_go_bin build_wheel
+build_linux_arm64: checkout build_go_bin build_wheel
+build_darwin_amd64:  checkout build_go_bin build_wheel
+build_darwin_arm64: checkout build_go_bin build_wheel
+
+build_go_bin:
+	 cd ${SOURCE_PATH} && GOOS=${GOOS} GOARCH=${GOARCH} go build -o ${BIN_PATH}/arcaflowengine cmd/arcaflow/main.go
+
 
 # remove all build artifacts
 clean:
-	@rm -rf build dist ${PKG_NAME}.egg-info
+	@rm -rf arcaflowengine/bin/* build dist ${PKG_NAME}.egg-info
 	@find . -name __pycache__ -exec rm -rf {} \; 2>/dev/null
 
-# build the wheel
-${WHEEL_TARGET}: setup.py ${PKG_NAME}/__init__.py ${PKG_NAME}/arcaflowengine.py ${PKG_NAME}/bin/arcaflowengine
-	python3.9 setup.py bdist_wheel --universal
+
+build_wheel:
+	python3.9 setup.py bdist_wheel --plat-name ${PLAT_NAME}
+
 
 	
