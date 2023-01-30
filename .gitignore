@@ -1,0 +1,5 @@
+dist/
+source/
+*.egg-info
+build/
+arcaflowengine/bin
