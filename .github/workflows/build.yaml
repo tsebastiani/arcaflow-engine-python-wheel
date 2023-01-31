@@ -20,6 +20,9 @@ jobs:
           RELEASE_VERSION: v0.1.0
         shell: bash
         run: |
+          make -v
+          bash --version
+          echo $SHELL
           make setup
           sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
           make build_linux_amd64
