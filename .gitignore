@@ -2,4 +2,4 @@ dist/
 source/
 *.egg-info
 build/
-arcaflowengine/bin
+arcaflowengine/bin/arcaflow*
