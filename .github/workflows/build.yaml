@@ -21,7 +21,7 @@ jobs:
           bash --version
           echo $SHELL
           make setup
-          sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
+          #sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
           make build_linux_amd64
           make build_linux_arm64
           make build_darwin_amd64
