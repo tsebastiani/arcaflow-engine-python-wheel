@@ -29,4 +29,4 @@ jobs:
           make build_linux_arm64
           make build_darwin_amd64
           make build_darwin_arm64
-          twine upload --repository testpypi -u ${secrets.PYPI_USER} -p ${secrets.PYPI_PASS} --non-interactive dist/*
+          twine upload --repository testpypi -u ${{secrets.PYPI_USER}} -p ${{secrets.PYPI_PASS}} --non-interactive dist/*
