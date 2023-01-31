@@ -9,7 +9,7 @@ setup(
     },
     description="Arcaflow engine python wrapper",
     author="Tullio Sebastiani",
-    author_email="tsebasti[at]redhat.com",
+    author_email="tsebasti@redhat.com",
     license="Apache",
     packages=['arcaflowengine']
 )
