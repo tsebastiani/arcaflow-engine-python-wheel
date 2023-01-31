@@ -1,3 +1,4 @@
+SHELL := /bin/bash
 SOURCE_PATH=${CURDIR}/source/arcaflow-engine
 BIN_PATH=${CURDIR}/arcaflowengine/bin
 
