@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='arcaflowengine',
-    version='0.1.1',
+    version='1.0.0',
     license_files = ('LICENSE',),
     package_data={
         'arcaflowengine':['bin/arcaflow*']
