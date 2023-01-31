@@ -18,6 +18,7 @@ jobs:
       - name: Build the project
         env:
           RELEASE_VERSION: v0.1.0
+        shell: bash
         run: |
           make setup
           sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
