@@ -11,5 +11,6 @@ setup(
     author="Tullio Sebastiani",
     author_email="tsebasti@redhat.com",
     license="Apache",
-    packages=['arcaflowengine']
+    packages=['arcaflowengine'],
+    url="https://arcalot.io/arcaflow/"
 )
