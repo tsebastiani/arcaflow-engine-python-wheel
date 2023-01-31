@@ -1,4 +1,4 @@
-import os, sys, subprocess
+import os, sys, subprocess, platform
 from .engineargs import EngineArgs
 
 def run(arg: EngineArgs):
@@ -26,9 +26,14 @@ def run(arg: EngineArgs):
             args.extend(["-workflow",arg.workflow])
         else:
             raise Exception("Error: context file {} not found".format(arg.workflow))
+
     
+    is_windows = any(platform.win32_ver())
+    binary_name="arcaflow"
+    if is_windows:
+        binary_name="arcaflow.exe"
     sys.exit(subprocess.call([
-        os.path.join(os.path.dirname(__file__), "bin","arcaflowengine"),
+        os.path.join(os.path.dirname(__file__), "bin",binary_name),
         *args
     ]))
 

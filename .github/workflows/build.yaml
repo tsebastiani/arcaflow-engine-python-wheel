@@ -16,9 +16,13 @@ jobs:
           python-version: '3.9'
           architecture: 'x64'
       - name: Build the project
-        run: | 
+        env:
+          RELEASE_VERSION: v0.1.0
+        run: |
           make setup
+          sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
           make build_linux_amd64
           make build_linux_arm64
           make build_darwin_amd64
           make build_darwin_arm64
+          twine upload --repository testpypi -u ${secrets.PYPI_USER} -p ${secrets.PYPI_PASS} --non-interactive dist/*
