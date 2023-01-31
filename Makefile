@@ -24,7 +24,7 @@ help:
 
 # install packaging utilities (only run this once)
 setup: 
-	pip3.9 install wheel setuptools
+	pip3.9 install wheel setuptools tiwne 
 
 checkout:
 	rm -rf ${SOURCE_PATH}
