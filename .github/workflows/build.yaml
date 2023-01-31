@@ -2,7 +2,7 @@ name: Build Arcaflow Python Wheel
 on: push
 jobs:
   build:
-    name: "Build Arcaflow Python Wheel (arcaflowengine)"
+    name: "Build Arcaflow Python Wheel"
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
