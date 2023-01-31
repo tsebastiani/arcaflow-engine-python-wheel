@@ -36,7 +36,7 @@ checkout:
 	rm -rf ${ARCH}_${OS}
 	mkdir ${ARCH}_${OS}
 
-	@if [[ ${PLAT_NAME} == "win_amd64" ]]; then\
+	@if [ ${PLAT_NAME} == "win_amd64" ]; then\
 			curl -L --fail https://github.com/arcalot/arcaflow-engine/releases/download/$${RELEASE_VERSION}/arcaflow_$${RELEASE_VERSION/v/}_${OS}_${ARCH}.zip --output ${ARCH}_${OS}/arcaflow.zip; \
 			unzip ${ARCH}_${OS}/arcaflow.zip -d ${ARCH}_${OS}/; \
 			cp ${ARCH}_${OS}/arcaflow.exe ${BIN_PATH}/; \
