@@ -15,7 +15,7 @@ jobs:
           VERSION: ${{ github.ref_name }}
         run: |
           [[  ${VERSION//[[:blank:]]/} =~ ^v[[:digit:]]+\.[[:digit:]]\.[[:digit:]]$ ]] && export OK=true 
-          echo $OK
+          [[ -z $OK ]] && "[ERR] wrong version format: $VERSION" && exit 1
       #- name: Check out code
       #  uses: actions/checkout@v3
       #- name: Install Python
