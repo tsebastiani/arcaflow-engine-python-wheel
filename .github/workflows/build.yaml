@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: version format check
         if: startsWith(github.event.ref, 'refs/tags/')
+        shell: bash
         env:
           VERSION: ${{ github.ref_name }}
         run: |
