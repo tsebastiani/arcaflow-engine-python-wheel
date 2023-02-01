@@ -1,30 +1,40 @@
 name: Build Arcaflow Python Wheel
-on: push
+on: 
+  push:
+    tags:
+      - v*
 jobs:
   build:
     name: "Build Arcaflow Python Wheel"
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-          architecture: 'x64'
-      - name: Build the wheel (arcaflowengine)
+      - name: version format check
+        if: startsWith(github.event.ref, 'refs/tags/')
         env:
-          RELEASE_VERSION: v0.1.0
-        shell: bash
+          VERSION: ${{ github.ref_name }}
         run: |
-          make -v
-          bash --version
-          echo $SHELL
-          make setup
-          sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
-          make build_linux_amd64
-          make build_linux_arm64
-          make build_darwin_amd64
-          make build_darwin_arm64
-          make build_windows_amd64
-          twine upload --verbose --skip-existing --repository testpypi -u ${{secrets.PYPI_USER}} -p ${{secrets.PYPI_PASS}} --non-interactive dist/*
+          echo $VERSION | grep -P "^v\d+\.\d+\.\d+$" > /dev/null 2>&1
+          [[ ! $? ]] && echo "wrong version name: $VERSION, failing." && exit 1
+      #- name: Check out code
+      #  uses: actions/checkout@v3
+      #- name: Install Python
+      #  uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.9'
+      #    architecture: 'x64'
+      #- name: Build the wheel (arcaflow)
+      #  env:
+      #    RELEASE_VERSION: v0.1.0
+      #  shell: bash
+      #  run: |
+      #    make -v
+      #    bash --version
+      #    echo $SHELL
+      #    make setup
+      #    sed -ri "s/^(.+version=')(.+)('.*)/\1${RELEASE_VERSION/v/}\3/g" setup.py
+      #    make build_linux_amd64
+      #    make build_linux_arm64
+      #    make build_darwin_amd64
+      #    make build_darwin_arm64
+      #    make build_windows_amd64
+      #    twine upload --verbose --skip-existing --repository testpypi -u ${{secrets.PYPI_USER}} -p ${{secrets.PYPI_PASS}} --non-interactive dist/*
