@@ -19,7 +19,7 @@ jobs:
           echo $OK
       - name: cd 
         run: |
-        cd arcaflow
+          cd arcaflow
       - name: ls
         run: | 
           ls -al
