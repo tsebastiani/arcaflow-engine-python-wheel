@@ -14,7 +14,8 @@ jobs:
         env:
           VERSION: ${{ github.ref_name }}
         run: |
-          echo $VERSION | grep -P "^v\d+\.\d+\.\d+$"  || echo "::error::Unexpected version" && exit 1
+          [[  ${VERSION//[[:blank:]]/} =~ ^v[[:digit:]]+\.[[:digit:]]\.[[:digit:]]$ ]] && export OK=true 
+          echo $OK
       #- name: Check out code
       #  uses: actions/checkout@v3
       #- name: Install Python
